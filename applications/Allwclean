@@ -1,0 +1,16 @@
+#!/bin/sh
+cd "${0%/*}" || exit                            # Run from this directory
+#------------------------------------------------------------------------------
+
+# The solver; the Cantera build in external/cantera stays, it takes a while
+wclean solvers/combustion/reactingCanteraFoam
+
+for binDir in "$FOAM_APPBIN" "$FOAM_SITE_APPBIN" "$FOAM_USER_APPBIN"
+do
+    if [ -d "$binDir" ]
+    then
+        rm -f "$binDir"/reactingCanteraFoam
+    fi
+done
+
+#------------------------------------------------------------------------------

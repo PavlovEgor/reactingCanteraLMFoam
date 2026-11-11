@@ -1,0 +1,11 @@
+#!/bin/sh
+cd "${0%/*}" || exit                            # Run from this directory
+targetType=libso
+. "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
+#------------------------------------------------------------------------------
+
+# What reactingCanteraFoam cases need: boundary conditions, radiation
+wmake $targetType boundaryConditions
+wmake $targetType radiationModels
+
+#------------------------------------------------------------------------------

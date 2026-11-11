@@ -1,0 +1,83 @@
+#!/bin/sh
+cd "${0%/*}" || exit                            # Run from this directory
+. "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
+#------------------------------------------------------------------------------
+#
+# reactingCanteraFoam, and the Cantera it takes the transport from.
+#
+# Cantera is the external/cantera submodule, built here with SCons as a static
+# library and linked into the solver, so that running a case needs nothing of
+# it but the mechanism file. SCons is $SCONS, or comes from the repository's
+# .venv (requirements.txt), the active virtual environment or the PATH.
+# Without it the solver is skipped.
+#
+#     CANTERA_DIR     an installed Cantera to use instead: its prefix, with
+#                     include/cantera and lib/libcantera.so
+#
+#------------------------------------------------------------------------------
+
+root=$(cd ../../../.. && pwd)
+
+if [ -n "$CANTERA_DIR" ]
+then
+    [ -f "$CANTERA_DIR/include/cantera/core.h" ] || {
+        echo "$0: no include/cantera/core.h in CANTERA_DIR=$CANTERA_DIR" 1>&2
+        exit 1
+    }
+
+    CANTERA_INC="$CANTERA_DIR/include"
+    CANTERA_LIBS="-L$CANTERA_DIR/lib -lcantera -Wl,-rpath,$CANTERA_DIR/lib"
+else
+    cantera="$root/external/cantera"
+
+    if [ ! -f "$cantera/build/lib/libcantera.a" ]
+    then
+        [ -f "$cantera/SConstruct" ] || {
+            echo "$0: external/cantera is empty, run" \
+                 "'git submodule update --init external/cantera'" 1>&2
+            exit 1
+        }
+
+        unset scons
+        for candidate in "$SCONS" "$root/.venv/bin/scons" \
+            "${VIRTUAL_ENV:+$VIRTUAL_ENV/bin/scons}" "$(command -v scons 2>/dev/null)"
+        do
+            if [ -n "$candidate" ] && [ -x "$candidate" ]
+            then
+                scons="$candidate"
+                break
+            fi
+        done
+
+        if [ -z "$scons" ]
+        then
+            /bin/cat<<INFORMATION 1>&2
+==> Skipping reactingCanteraFoam: building Cantera needs SCons
+    install it with '.venv/bin/pip install -r requirements.txt',
+    or set CANTERA_DIR to an installed Cantera
+==
+INFORMATION
+            exit 0
+        fi
+
+        echo "scons(cantera) $cantera"
+
+        # fmt, Eigen, yaml-cpp and SUNDIALS are Cantera's own submodules;
+        # SCons checks them out where the system has none
+        (
+            cd "$cantera" && "$scons" build -j "${WM_NCOMPPROCS:-2}" \
+                python_package=n f90_interface=n hdf_support=n \
+                googletest=none system_blas_lapack=n \
+                doxygen_docs=n sphinx_docs=n debug=n
+        ) || exit 1
+    fi
+
+    CANTERA_INC="$cantera/include"
+    CANTERA_LIBS="$cantera/build/lib/libcantera.a"
+fi
+
+export CANTERA_INC CANTERA_LIBS
+
+wmake
+
+#------------------------------------------------------------------------------

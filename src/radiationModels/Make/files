@@ -1,0 +1,3 @@
+opticallyThin/opticallyThin.C
+
+LIB = $(FOAM_MODULE_LIBBIN)/libopticallyThinRadiation

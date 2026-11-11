@@ -1,0 +1,3 @@
+[submodule "external/cantera"]
+	path = external/cantera
+	url = https://github.com/Cantera/cantera.git

@@ -1,0 +1,13 @@
+# wmake output
+lnInclude
+**/Make/linux*/
+*.o
+*.dep
+*.so
+
+# Editor backups
+*~
+*.bak
+
+# Python: a virtual environment for SCons
+/.venv/

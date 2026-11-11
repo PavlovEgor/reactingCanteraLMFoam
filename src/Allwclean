@@ -1,0 +1,17 @@
+#!/bin/sh
+cd "${0%/*}" || exit                            # Run from this directory
+#------------------------------------------------------------------------------
+
+wclean boundaryConditions
+wclean radiationModels
+
+for libDir in "$FOAM_LIBBIN" "$FOAM_SITE_LIBBIN" "$FOAM_USER_LIBBIN"
+do
+    if [ -d "$libDir" ]
+    then
+        rm -f "$libDir"/libburnerBoundaryConditions* \
+              "$libDir"/libopticallyThinRadiation*
+    fi
+done
+
+#------------------------------------------------------------------------------

@@ -1,0 +1,4 @@
+massFluxInletVelocity/massFluxInletVelocityFvPatchVectorField.C
+burnerSpecieFlux/burnerSpecieFluxFvPatchScalarField.C
+
+LIB = $(FOAM_MODULE_LIBBIN)/libburnerBoundaryConditions
