@@ -3,7 +3,7 @@ cd "${0%/*}" || exit                            # Run from this directory
 . "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
 #------------------------------------------------------------------------------
 #
-# reactingCanteraFoam, and the Cantera it takes the transport from.
+# reactingCanteraLMFoam, and the Cantera it takes the transport from.
 #
 # Cantera is the external/cantera submodule, built here with SCons as a static
 # library and linked into the solver, so that running a case needs nothing of
@@ -52,7 +52,7 @@ else
         if [ -z "$scons" ]
         then
             /bin/cat<<INFORMATION 1>&2
-==> Skipping reactingCanteraFoam: building Cantera needs SCons
+==> Skipping reactingCanteraLMFoam: building Cantera needs SCons
     install it with '.venv/bin/pip install -r requirements.txt',
     or set CANTERA_DIR to an installed Cantera
 ==

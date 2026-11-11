@@ -40,7 +40,7 @@ Description
     of the amount of each specie that enters (Margolis, Combust. Sci.
     Technol. 22 (1980); Li et al., Combust. Flame 276 (2025) 114115, Eq. 2).
 
-    The diffusive flux is the one reactingCanteraFoam solves with,
+    The diffusive flux is the one reactingCanteraLMFoam solves with,
 
         j.n Sf = - rhoD snGrad(Y) Sf + phiD + phiDc Y_b
 

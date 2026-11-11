@@ -23,7 +23,7 @@ License
 
 
 Application
-    reactingCanteraFoam
+    reactingCanteraLMFoam
 
 Group
     grpCombustionSolvers

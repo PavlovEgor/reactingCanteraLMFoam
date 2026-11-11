@@ -1,4 +1,4 @@
-# Builds the external/cantera submodule for reactingCanteraFoam:
+# Builds the external/cantera submodule for reactingCanteraLMFoam:
 #
 #     python3 -m venv .venv
 #     .venv/bin/pip install -r requirements.txt

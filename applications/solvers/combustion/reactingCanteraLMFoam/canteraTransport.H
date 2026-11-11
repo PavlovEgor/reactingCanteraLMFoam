@@ -25,7 +25,7 @@ Class
     Foam::canteraTransport
 
 Description
-    Detailed molecular transport for reactingCanteraFoam, with the transport
+    Detailed molecular transport for reactingCanteraLMFoam, with the transport
     coefficients from Cantera.
 
     The diffusive mass flux of specie k is

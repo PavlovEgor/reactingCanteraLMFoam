@@ -1,6 +1,6 @@
 # reactingCanteraLMFoam
 
-`reactingCanteraFoam`: an OpenFOAM v2412 solver for laminar flames that need detailed
+`reactingCanteraLMFoam`: an OpenFOAM v2412 solver for laminar flames that need detailed
 molecular transport, with the boundary conditions of a flat porous burner and an optically
 thin radiation model. Laid out like an OpenFOAM plugin; it has nothing to do with any
 particular chemistry model, and runs with OpenFOAM's own or with
@@ -15,7 +15,7 @@ src/
   radiationModels/              opticallyThin
 applications/
   solvers/combustion/
-    reactingCanteraFoam/        the solver, and canteraTransport: Cantera's transport
+    reactingCanteraLMFoam/      the solver, and canteraTransport: Cantera's transport
 external/
   cantera/                      the Cantera submodule, 3.2.0
 requirements.txt                SCons, for the Cantera build
@@ -39,7 +39,7 @@ solver, so a case needs nothing of Cantera at run time but the mechanism file.
 skipped with a note saying so. The libraries go to `$FOAM_USER_LIBBIN` and the solver to
 `$FOAM_USER_APPBIN`, or where `-prefix` says, as for any plugin.
 
-## reactingCanteraFoam
+## The solver
 
 `rhoReactingBuoyantFoam` with the molecular transport a resolved laminar flame needs,
 which `reactingFoam` does not have - it diffuses every specie and heat at one rate. It

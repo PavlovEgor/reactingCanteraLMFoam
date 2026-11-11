@@ -4,7 +4,7 @@ targetType=libso
 . "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
 #------------------------------------------------------------------------------
 
-# What reactingCanteraFoam cases need: boundary conditions, radiation
+# What reactingCanteraLMFoam cases need: boundary conditions, radiation
 wmake $targetType boundaryConditions
 wmake $targetType radiationModels
 
